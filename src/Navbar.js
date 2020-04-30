@@ -7,6 +7,7 @@ import "rc-slider/assets/index.css";
 import "./Navbar.css";
 import Select from "@material-ui/core/Select";
 import { MenuItem } from "@material-ui/core";
+import { Link } from "react-router-dom";
 
 class Navbar extends Component {
   constructor(props) {
@@ -28,7 +29,7 @@ class Navbar extends Component {
     return (
       <header className="Navbar">
         <div className="logo">
-          <a href="#">Reactcolorpicker</a>
+          <Link to="/">Reactcolorpicker</Link>
         </div>
         <div className="slider-container">
           <span>Level: {level}</span>
