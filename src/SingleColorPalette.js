@@ -32,7 +32,7 @@ class SingleColorPalette extends Component {
       <ColorBox
         key={color.name}
         name={color.name}
-        showLink={false}
+        showingFullPalette={false}
         background={color[format]}
       />
     ));
