@@ -1,5 +1,6 @@
 import React from "react";
 import { withStyles } from "@material-ui/styles";
+
 const styles = {
   root: {
     backgroundColor: "white",
@@ -24,6 +25,7 @@ const styles = {
     justifyContent: "space-between",
     alignItems: "center",
     color: "black",
+    margin: "0",
     paddingTop: "0.5rem",
     fontSize: "1rem",
     position: "relative",
