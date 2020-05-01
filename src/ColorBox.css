@@ -5,7 +5,7 @@
   display: inline-block;
   position: relative;
   cursor: pointer;
-  margin-bottom: -3.5px;
+  margin-bottom: -4.5px;
 }
 .SingleColorPalette .ColorBox {
   height: 50%;
@@ -42,6 +42,14 @@
 .ColorBox:hover .copy-button {
   opacity: 1;
   transition: 0.5s;
+}
+
+.light-text {
+  color: white;
+}
+
+.ColorBox .dark-text {
+  color: black;
 }
 
 .box-content {
