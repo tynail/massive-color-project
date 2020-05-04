@@ -1,10 +1,8 @@
 import React, { Component } from "react";
 import { Link } from "react-router-dom";
-import chroma from "chroma-js";
 import { CopyToClipboard } from "react-copy-to-clipboard";
 import { withStyles } from "@material-ui/styles";
-import styles from './styles/ColorBoxStyles';
-
+import styles from "./styles/ColorBoxStyles";
 
 class ColorBox extends Component {
   constructor(props) {
@@ -27,10 +25,7 @@ class ColorBox extends Component {
       classes,
     } = this.props;
     const { copied } = this.state;
-    // const isDarkColor = chroma(background).luminance() <= 0.08;
-    // const isLightColor = chroma(background).luminance() <= 0.8;
-    const contrastClass =
-      chroma.contrast(background, "white") < 4.5 ? "dark-text" : "light-text";
+
     return (
       <CopyToClipboard text={background} onCopy={this.changeCopyState}>
         <div style={{ background }} className={classes.colorBox}>
@@ -38,7 +33,7 @@ class ColorBox extends Component {
             style={{ background }}
             className={`${classes.copyOverlay} ${
               copied && classes.showOverlay
-              }`}
+            }`}
           />
           <div
             className={`${classes.copyMsg} ${copied && classes.showMessage}`}
