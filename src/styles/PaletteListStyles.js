@@ -1,6 +1,7 @@
 export default {
   root: {
     backgroundColor: "blue",
+    overflow: "scroll",
     height: "100vh",
     display: "flex",
     alignItems: "flex-start",
