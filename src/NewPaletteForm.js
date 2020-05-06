@@ -1,16 +1,16 @@
 import React, { Component } from "react";
 import classNames from "classnames";
 import { withStyles } from "@material-ui/core/styles";
+import PaletteFormNav from "./PaletteFormNav";
+import ColorPickerForm from "./ColorPickerForm";
 import Drawer from "@material-ui/core/Drawer";
 import Typography from "@material-ui/core/Typography";
 import Divider from "@material-ui/core/Divider";
 import IconButton from "@material-ui/core/IconButton";
 import ChevronLeftIcon from "@material-ui/icons/ChevronLeft";
-import PaletteFormNav from "./PaletteFormNav";
 import Button from "@material-ui/core/Button";
 import DraggableColorList from "./DraggableColorList";
 import { arrayMove } from "react-sortable-hoc";
-import ColorPickerForm from "./ColorPickerForm";
 
 const drawerWidth = 400;
 
@@ -18,16 +18,18 @@ const styles = (theme) => ({
   root: {
     display: "flex",
   },
-
   hide: {
     display: "none",
   },
   drawer: {
     width: drawerWidth,
     flexShrink: 0,
+    height: "100vh",
   },
   drawerPaper: {
     width: drawerWidth,
+    display: "flex",
+    alignItems: "center",
   },
   drawerHeader: {
     display: "flex",
@@ -39,7 +41,7 @@ const styles = (theme) => ({
   content: {
     flexGrow: 1,
     height: "calc(100vh - 64px)",
-    padding: theme.spacing(3),
+    padding: theme.spacing.unit * 3,
     transition: theme.transitions.create("margin", {
       easing: theme.transitions.easing.sharp,
       duration: theme.transitions.duration.leavingScreen,
@@ -52,6 +54,20 @@ const styles = (theme) => ({
       duration: theme.transitions.duration.enteringScreen,
     }),
     marginLeft: 0,
+  },
+  container: {
+    width: "90%",
+    height: "100%",
+    display: "flex",
+    flexDirection: "column",
+    justifyContent: "center",
+    alignItems: "center",
+  },
+  buttons: {
+    width: "100%",
+  },
+  button: {
+    width: "50%",
   },
 });
 
@@ -66,11 +82,11 @@ class NewPaletteForm extends Component {
       colors: this.props.palettes[0].colors,
     };
     this.addNewColor = this.addNewColor.bind(this);
+    this.handleChange = this.handleChange.bind(this);
     this.handleSubmit = this.handleSubmit.bind(this);
     this.removeColor = this.removeColor.bind(this);
     this.clearColors = this.clearColors.bind(this);
     this.addRandomColor = this.addRandomColor.bind(this);
-    this.handleChange = this.handleChange.bind(this);
   }
 
   handleDrawerOpen = () => {
@@ -87,13 +103,21 @@ class NewPaletteForm extends Component {
       newColorName: "",
     });
   }
-
-  handleChange(e) {
+  handleChange(evt) {
     this.setState({
-      [e.target.name]: e.target.value,
+      [evt.target.name]: evt.target.value,
     });
   }
-
+  clearColors() {
+    this.setState({ colors: [] });
+  }
+  addRandomColor() {
+    //pick random color from existing palettes
+    const allColors = this.props.palettes.map((p) => p.colors).flat();
+    var rand = Math.floor(Math.random() * allColors.length);
+    const randomColor = allColors[rand];
+    this.setState({ colors: [...this.state.colors, randomColor] });
+  }
   handleSubmit(newPaletteName) {
     const newPalette = {
       paletteName: newPaletteName,
@@ -101,28 +125,13 @@ class NewPaletteForm extends Component {
       colors: this.state.colors,
     };
     this.props.savePalette(newPalette);
-    // Redirect
     this.props.history.push("/");
   }
-
   removeColor(colorName) {
     this.setState({
       colors: this.state.colors.filter((color) => color.name !== colorName),
     });
   }
-
-  addRandomColor() {
-    // add random color from existing palettes
-    const allColors = this.props.palettes.map((p) => p.colors).flat();
-    var rand = Math.floor(Math.random() * allColors.length);
-    const randomColor = allColors[rand];
-    this.setState({ colors: [...this.state.colors, randomColor] });
-  }
-
-  clearColors() {
-    this.setState({ colors: [] });
-  }
-
   onSortEnd = ({ oldIndex, newIndex }) => {
     this.setState(({ colors }) => ({
       colors: arrayMove(colors, oldIndex, newIndex),
@@ -133,6 +142,7 @@ class NewPaletteForm extends Component {
     const { classes, maxColors, palettes } = this.props;
     const { open, colors } = this.state;
     const paletteIsFull = colors.length >= maxColors;
+
     return (
       <div className={classes.root}>
         <PaletteFormNav
@@ -156,29 +166,35 @@ class NewPaletteForm extends Component {
             </IconButton>
           </div>
           <Divider />
-          <Typography variant="h4">Design Your Palette</Typography>
-          <div>
-            <Button
-              variant="contained"
-              color="secondary"
-              onClick={this.clearColors}
-            >
-              Clear Palette
-            </Button>
-            <Button
-              variant="contained"
-              color="primary"
-              onClick={this.addRandomColor}
-              disabled={paletteIsFull}
-            >
-              Random color
-            </Button>
+          <div className={classes.container}>
+            <Typography variant="h4" gutterBottom>
+              Design Your Palette
+            </Typography>
+            <div className={classes.buttons}>
+              <Button
+                variant="contained"
+                color="secondary"
+                onClick={this.clearColors}
+                className={classes.button}
+              >
+                Clear Palette
+              </Button>
+              <Button
+                variant="contained"
+                className={classes.button}
+                color="primary"
+                onClick={this.addRandomColor}
+                disabled={paletteIsFull}
+              >
+                Random Color
+              </Button>
+            </div>
+            <ColorPickerForm
+              paletteIsFull={paletteIsFull}
+              addNewColor={this.addNewColor}
+              colors={colors}
+            />
           </div>
-          <ColorPickerForm
-            paletteIsFull={paletteIsFull}
-            addNewColor={this.addNewColor}
-            colors={colors}
-          />
         </Drawer>
         <main
           className={classNames(classes.content, {
