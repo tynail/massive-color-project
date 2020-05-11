@@ -56,7 +56,7 @@ const styles = (theme) => ({
 class PaletteFormNav extends Component {
   constructor(props) {
     super(props);
-    this.state = { newPaletteName: "", formShowing: false };
+    this.state = { formShowing: false };
     this.handleChange = this.handleChange.bind(this);
     this.showForm = this.showForm.bind(this);
     this.hideForm = this.hideForm.bind(this);
@@ -76,7 +76,6 @@ class PaletteFormNav extends Component {
   }
   render() {
     const { classes, open, palettes, handleSubmit } = this.props;
-    const { newPaletteName } = this.state;
     return (
       <div>
         <CssBaseline />
