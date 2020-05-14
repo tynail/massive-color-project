@@ -1,3 +1,4 @@
+import chroma from "chroma-js";
 import sizes from "./sizes";
 
 const styles = {
@@ -37,6 +38,8 @@ const styles = {
     textTransform: " uppercase",
     fontSize: " 12px",
     display: "flex",
+    color: (props) =>
+      chroma.contrast(props.color, "white") < 4.5 ? "black" : "white",
     justifyContent: "space-between",
   },
   deleteIcon: {
