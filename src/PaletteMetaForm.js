@@ -5,9 +5,9 @@ import DialogActions from "@material-ui/core/DialogActions";
 import DialogContent from "@material-ui/core/DialogContent";
 import DialogContentText from "@material-ui/core/DialogContentText";
 import DialogTitle from "@material-ui/core/DialogTitle";
+import { ValidatorForm, TextValidator } from "react-material-ui-form-validator";
 import { Picker } from "emoji-mart";
 import "emoji-mart/css/emoji-mart.css";
-import { ValidatorForm, TextValidator } from "react-material-ui-form-validator";
 
 // This component is the pop-up component that open when we click the save button from the create palette Navbar
 class PaletteMetaForm extends Component {
@@ -60,18 +60,18 @@ class PaletteMetaForm extends Component {
   }
 
   render() {
-    const { newPaletteName } = this.state;
-    const { hideForm, handleSubmit } = this.props;
+    const { newPaletteName, stage } = this.state;
+    const { hideForm } = this.props;
     return (
       <div>
-        <Dialog open={this.state.stage === "emoji"} onClose={hideForm}>
+        <Dialog open={stage === "emoji"} onClose={hideForm}>
           <DialogTitle id="form-dialog-title">
             Choose a Palette Emoji!
           </DialogTitle>
           <Picker onSelect={this.savePalette} title="Pick a palette Emoji" />
         </Dialog>
         <Dialog
-          open={this.state.stage === "born"}
+          open={stage === "born"}
           onClose={hideForm}
           aria-labelledby="form-dialog-title"
         >

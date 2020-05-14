@@ -1,10 +1,10 @@
 import React, { Component } from "react";
-import ColorBox from "./ColorBox";
-import Navbar from "./Navbar";
 import { Link } from "react-router-dom";
-import PaletteFooter from "./PaletteFooter";
 import { withStyles } from "@material-ui/styles";
-import styles from './styles/PaletteStyles';
+import ColorBox from "./ColorBox";
+import PaletteFooter from "./PaletteFooter";
+import Navbar from "./Navbar";
+import styles from "./styles/PaletteStyles";
 
 class SingleColorPalette extends Component {
   constructor(props) {
@@ -45,9 +45,7 @@ class SingleColorPalette extends Component {
         <div className={classes.colors}>
           {colorBoxes}
           <div className={classes.goBack}>
-            <Link to={`/palette/${id}`}>
-              GO BACK
-            </Link>
+            <Link to={`/palette/${id}`}>GO BACK</Link>
           </div>
         </div>
         <PaletteFooter paletteName={paletteName} emoji={emoji} />
