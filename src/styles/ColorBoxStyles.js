@@ -89,7 +89,7 @@ export default {
     border: "none",
     opacity: 0,
   },
-  copyMsg: {
+  copyMessage: {
     position: "fixed",
     left: "0",
     right: "0",
